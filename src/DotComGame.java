@@ -118,7 +118,7 @@ public class DotComGame {
      *
      */
     public static void setFromKeyboard() {
-        System.out.println("Input an positive integer.");
+        System.out.println("Input a natural number.");
         String str = in.next(); //Get the string from keyboard.
         int[] number = new int[str.length()]; //To store every character in the string.
         int i;
@@ -165,15 +165,29 @@ public class DotComGame {
     public void makeMap() {
         //Set the length of battlefield and DOTCOM using set and get fromKeyboard.
         System.out.println("Please input the length fo battlefield.");
-        setFromKeyboard();
+        while (getFromKeyboard() == 0) {
+            setFromKeyboard();
+            if (getFromKeyboard() == 0) {
+                System.out.println("You cannot input 0 for this part!");
+            }
+        }
         this.setLen(getFromKeyboard());
         System.out.println("Please input the length of the dotCom");
-        setFromKeyboard();
+        boardInput = 0;
+        while (getFromKeyboard() == 0 || getFromKeyboard() >= getLen()) {
+            setFromKeyboard();
+            if (getFromKeyboard() == 0) {
+                System.out.println("You cannot input 0 for this part!");
+            }
+            if (getFromKeyboard() >= getLen()) {
+                System.out.println("The length of dot com cannot be greater than or equal to the total length!");
+            }
+        }
         this.setComLen(getFromKeyboard());
 
         this.bF.initBattleField(this.getLen());
         int startPoint = findRandomIntBetween(0, this.getComLen() - 1); //Find the start point of the DOTCOM.
-        for (int i = startPoint; i < startPoint + this.getComLen() - 1; i++) {
+        for (int i = startPoint; i < startPoint + this.getComLen(); i++) {
             this.bF.setTrue(i);
         }
     }
@@ -217,7 +231,7 @@ public class DotComGame {
 
     /**The main body of the game.
      * <p>
-     * In the part, A loop is provided to see whether the player has shoot all the DOTCOM.
+     * In this part, A loop is provided to see whether the player has shoot all the DOTCOM.
      *
      * @param args never use it
      */
